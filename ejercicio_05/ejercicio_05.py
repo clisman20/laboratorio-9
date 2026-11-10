@@ -31,7 +31,14 @@ Requisitos
 
 
 def extraer_valores(datos):
-    pass
+    resultado = []
+    for datos in datos:
+        if isinstance(datos, list):
+            resultado.extend(extraer_valores(datos))
+        else:
+            resultado.append(datos)
+    return resultado
+
 
 
 # ---------------------------------------------------------------------

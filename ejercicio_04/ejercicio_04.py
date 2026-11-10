@@ -32,7 +32,18 @@ Restricciones
 
 
 def buscar_codigo(codigos, objetivo, izquierda, derecha):
-    pass
+    if izquierda > derecha:
+        return -1
+
+    medio = (izquierda + derecha) // 2
+
+    if codigos[medio] == objetivo:
+        return medio
+    elif codigos[medio] < objetivo:
+        return buscar_codigo(codigos, objetivo, medio + 1, derecha)
+    else:
+        return buscar_codigo(codigos, objetivo, izquierda, medio - 1)
+     
 
 
 # ---------------------------------------------------------------------
@@ -68,3 +79,14 @@ if __name__ == "__main__":
     print(buscar_codigo(codigos, 300, 0, len(codigos) - 1))   # -1
     print(buscar_codigo([], 300, 0, -1))                      # -1
     print(buscar_codigo([205], 205, 0, 0))                    # 0
+
+    #las respuestas a las preguntas de analisis son:
+    #1. cuando se encuentra el objetivo o cuando izquierda es mayor que derecha
+    #2 . porque ya se comparo el valor del medio y no es necesario volver a compararlo
+    #3. Llamada | Izquierda | Derecha | Medio | Decisión
+    #   1    |     0     |    6    |   3    |  310  |  izquierda = medio + 1
+    #   2    |     4     |    6    |   5    |  520  |  derecha = medio - 1
+    #   3    |     4     |    4    |   4    |  520  |  izquierda = medio + 1
+    #   4    |     5     |    4    |   —    |  -1   |  izquierda > derecha
+    #4. la diferencia es que en contar_desde_limite() se recorre toda la lista mientras que en buscar_codigo() se va descartando la mitad de la lista en cada llamada recursiva.
+
